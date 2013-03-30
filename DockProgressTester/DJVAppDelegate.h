@@ -7,9 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Carbon/Carbon.h>
 
 @interface DJVAppDelegate : NSObject <NSApplicationDelegate>
+{
+  HIThemeTrackDrawInfo progressDrawInfo;
+}
 
 @property (assign) IBOutlet NSWindow *window;
+
+@property NSImage *progressBackground;
+@property NSTimeInterval progressElapsed;
 
 @end

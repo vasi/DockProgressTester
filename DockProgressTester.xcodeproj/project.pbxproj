@@ -13,6 +13,7 @@
 		591E2E88170710FA00D45C8B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 591E2E86170710FA00D45C8B /* Credits.rtf */; };
 		591E2E8B170710FA00D45C8B /* DJVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 591E2E8A170710FA00D45C8B /* DJVAppDelegate.m */; };
 		591E2E8E170710FB00D45C8B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 591E2E8C170710FB00D45C8B /* MainMenu.xib */; };
+		591E2E9517071B4400D45C8B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 591E2E9417071B4400D45C8B /* Carbon.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		591E2E89170710FA00D45C8B /* DJVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJVAppDelegate.h; sourceTree = "<group>"; };
 		591E2E8A170710FA00D45C8B /* DJVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJVAppDelegate.m; sourceTree = "<group>"; };
 		591E2E8D170710FB00D45C8B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		591E2E9417071B4400D45C8B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				591E2E9517071B4400D45C8B /* Carbon.framework in Frameworks */,
 				591E2E78170710FA00D45C8B /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,6 +49,7 @@
 		591E2E6B170710FA00D45C8B = {
 			isa = PBXGroup;
 			children = (
+				591E2E9417071B4400D45C8B /* Carbon.framework */,
 				591E2E7D170710FA00D45C8B /* DockProgressTester */,
 				591E2E76170710FA00D45C8B /* Frameworks */,
 				591E2E75170710FA00D45C8B /* Products */,

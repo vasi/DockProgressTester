@@ -10,9 +10,72 @@
 
 @implementation DJVAppDelegate
 
+- (void)initDockProgress
+{
+  NSImage *appIcon = [NSImage imageNamed:@"NSApplicationIcon"];
+  self.progressBackground = [appIcon copyWithZone:nil];
+  
+  NSSize sz = [self.progressBackground size];
+  progressDrawInfo = (HIThemeTrackDrawInfo){
+    .version = 0,
+    .kind = kThemeLargeProgressBar,
+    .bounds = CGRectMake(sz.width * 1/32, sz.height * 3/32,
+                         sz.width * 30/32, sz.height * 2/32),
+    .min = 0,
+    .max = INT32_MAX,
+    .value = 0,
+    .reserved = 0,
+    .attributes = kThemeTrackHorizontal,
+    .enableState = kThemeTrackActive,
+    .filler1 = 0,
+    .trackInfo = { .progress = { .phase = 0 } },
+  };
+  
+  HIRect bounds;
+  HIThemeGetTrackBounds(&progressDrawInfo, &bounds);
+  int mleft = 3, mtop = 3, mright = 3, mbot = 1;
+  bounds.origin.x += mleft;
+  bounds.origin.y += mbot;
+  bounds.size.width -= mleft + mright;
+  bounds.size.height -= mtop + mbot;
+  
+  [self.progressBackground lockFocus];
+  [[NSColor whiteColor] set];
+  NSRectFill(NSRectFromCGRect(bounds));
+  [self.progressBackground unlockFocus];
+  
+  self.progressElapsed = 0;
+}
+
+- (void)drawDockProgress:(NSTimer*)timer
+{
+  double seconds = 60.0;
+  double phaseSeconds = 30.0;
+  
+  self.progressElapsed += [timer timeInterval];
+  double progress = fmod(self.progressElapsed, seconds) / seconds;
+  UInt8 phase = fmod(self.progressElapsed, phaseSeconds) / phaseSeconds *
+    UINT8_MAX;
+  
+  NSImage *icon = [self.progressBackground copyWithZone:nil];
+  progressDrawInfo.value = progressDrawInfo.max * progress;
+  progressDrawInfo.trackInfo.progress.phase = phase;
+  
+  [icon lockFocus];
+  CGContextRef ctx = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+  HIThemeDrawTrack(&progressDrawInfo, NULL, ctx, kHIThemeOrientationNormal);
+  [icon unlockFocus];
+  [NSApp setApplicationIconImage:icon];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-  // Insert code here to initialize your application
+  [self initDockProgress];
+  [NSTimer scheduledTimerWithTimeInterval:1.0 / 30
+                                   target:self
+                                 selector:@selector(drawDockProgress:)
+                                 userInfo:nil
+                                  repeats:YES];
 }
 
 @end
