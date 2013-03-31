@@ -14,6 +14,7 @@
 		591E2E8B170710FA00D45C8B /* DJVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 591E2E8A170710FA00D45C8B /* DJVAppDelegate.m */; };
 		591E2E8E170710FB00D45C8B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 591E2E8C170710FB00D45C8B /* MainMenu.xib */; };
 		591E2E9517071B4400D45C8B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 591E2E9417071B4400D45C8B /* Carbon.framework */; };
+		591E2E9E17081DC800D45C8B /* DJVDockIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 591E2E9D17081DC800D45C8B /* DJVDockIconView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,8 @@
 		591E2E8A170710FA00D45C8B /* DJVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJVAppDelegate.m; sourceTree = "<group>"; };
 		591E2E8D170710FB00D45C8B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		591E2E9417071B4400D45C8B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		591E2E9C17081DC800D45C8B /* DJVDockIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJVDockIconView.h; sourceTree = "<group>"; };
+		591E2E9D17081DC800D45C8B /* DJVDockIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJVDockIconView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +93,8 @@
 				591E2E8A170710FA00D45C8B /* DJVAppDelegate.m */,
 				591E2E8C170710FB00D45C8B /* MainMenu.xib */,
 				591E2E7E170710FA00D45C8B /* Supporting Files */,
+				591E2E9C17081DC800D45C8B /* DJVDockIconView.h */,
+				591E2E9D17081DC800D45C8B /* DJVDockIconView.m */,
 			);
 			path = DockProgressTester;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 			files = (
 				591E2E84170710FA00D45C8B /* main.m in Sources */,
 				591E2E8B170710FA00D45C8B /* DJVAppDelegate.m in Sources */,
+				591E2E9E17081DC800D45C8B /* DJVDockIconView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +314,7 @@
 				591E2E93170710FB00D45C8B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
