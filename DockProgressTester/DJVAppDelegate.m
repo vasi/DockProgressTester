@@ -44,17 +44,24 @@
   NSRectFill(NSRectFromCGRect(bounds));
   [self.progressBackground unlockFocus];
   
-  self.progressElapsed = 0;
+  self.startTime = [NSDate date];
+  self.updatesPerSecond = 30.0;
 }
 
 - (void)drawDockProgress:(NSTimer*)timer
 {
+  [NSTimer scheduledTimerWithTimeInterval:1.0 / self.updatesPerSecond
+                                   target:self
+                                 selector:@selector(drawDockProgress:)
+                                 userInfo:nil
+                                  repeats:NO];
+  
   double seconds = 60.0;
   double phaseSeconds = 30.0;
   
-  self.progressElapsed += [timer timeInterval];
-  double progress = fmod(self.progressElapsed, seconds) / seconds;
-  UInt8 phase = fmod(self.progressElapsed, phaseSeconds) / phaseSeconds *
+  double elapsed = -[self.startTime timeIntervalSinceNow];
+  double progress = fmod(elapsed, seconds) / seconds;
+  UInt8 phase = fmod(elapsed, phaseSeconds) / phaseSeconds *
     UINT8_MAX;
   
   NSImage *icon = [self.progressBackground copyWithZone:nil];
@@ -71,11 +78,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
   [self initDockProgress];
-  [NSTimer scheduledTimerWithTimeInterval:1.0 / 30
-                                   target:self
-                                 selector:@selector(drawDockProgress:)
-                                 userInfo:nil
-                                  repeats:YES];
+  [self drawDockProgress:nil];
 }
 
 @end

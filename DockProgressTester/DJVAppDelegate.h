@@ -17,6 +17,8 @@
 @property (assign) IBOutlet NSWindow *window;
 
 @property NSImage *progressBackground;
-@property NSTimeInterval progressElapsed;
+@property NSDate *startTime;
+
+@property double updatesPerSecond;
 
 @end
