@@ -19,8 +19,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-  NSView *dockView = [[DJVDockIconView alloc] init];
-  [[NSApp dockTile] setContentView: dockView];
+  NSDockTile *dockTile = [NSApp dockTile];
+  NSRect frame = { .origin = NSZeroPoint, .size = [dockTile size] };
+  NSView *dockView = [[DJVDockIconView alloc] initWithFrame:frame];
+  [dockTile setContentView: dockView];
   [NSTimer scheduledTimerWithTimeInterval:1.0 / 30
                                    target:self
                                  selector:@selector(updateDockTile:)

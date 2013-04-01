@@ -12,5 +12,6 @@
 @interface DJVDockIconView : NSView
 
 @property NSDate *startTime;
+@property NSProgressIndicator *progress;
 
 @end
