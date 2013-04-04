@@ -12,38 +12,6 @@
 
 - (void)initDockProgress
 {
-  NSImage *appIcon = [NSImage imageNamed:@"NSApplicationIcon"];
-  self.progressBackground = [appIcon copyWithZone:nil];
-  
-  NSSize sz = [self.progressBackground size];
-  progressDrawInfo = (HIThemeTrackDrawInfo){
-    .version = 0,
-    .kind = kThemeLargeProgressBar,
-    .bounds = CGRectMake(sz.width * 1/32, sz.height * 3/32,
-                         sz.width * 30/32, sz.height * 2/32),
-    .min = 0,
-    .max = INT32_MAX,
-    .value = 0,
-    .reserved = 0,
-    .attributes = kThemeTrackHorizontal,
-    .enableState = kThemeTrackActive,
-    .filler1 = 0,
-    .trackInfo = { .progress = { .phase = 0 } },
-  };
-  
-  HIRect bounds;
-  HIThemeGetTrackBounds(&progressDrawInfo, &bounds);
-  int mleft = 3, mtop = 3, mright = 3, mbot = 1;
-  bounds.origin.x += mleft;
-  bounds.origin.y += mbot;
-  bounds.size.width -= mleft + mright;
-  bounds.size.height -= mtop + mbot;
-  
-  [self.progressBackground lockFocus];
-  [[NSColor whiteColor] set];
-  NSRectFill(NSRectFromCGRect(bounds));
-  [self.progressBackground unlockFocus];
-  
   self.startTime = [NSDate date];
   self.updatesPerSecond = 30.0;
 }
@@ -57,20 +25,31 @@
                                   repeats:NO];
   
   double seconds = 60.0;
-  double phaseSeconds = 30.0;
   
   double elapsed = -[self.startTime timeIntervalSinceNow];
   double progress = fmod(elapsed, seconds) / seconds;
-  UInt8 phase = fmod(elapsed, phaseSeconds) / phaseSeconds *
-    UINT8_MAX;
   
-  NSImage *icon = [self.progressBackground copyWithZone:nil];
-  progressDrawInfo.value = progressDrawInfo.max * progress;
-  progressDrawInfo.trackInfo.progress.phase = phase;
+  NSImage *icon = [[NSImage imageNamed:@"NSApplicationIcon"] copyWithZone:nil];
+  NSSize sz = [icon size];
+  NSRect bar = NSMakeRect(sz.width *  1/32, sz.height * 3/32,
+                          sz.width * 30/32, sz.height * 3/32);
   
   [icon lockFocus];
-  CGContextRef ctx = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-  HIThemeDrawTrack(&progressDrawInfo, NULL, ctx, kHIThemeOrientationNormal);
+  
+  // Draw the bar background
+  [[NSColor whiteColor] set];
+  [NSBezierPath fillRect:bar];
+  
+  // Draw the progress
+  NSRect prog = bar;
+  prog.size.width *= progress;
+  [[NSColor blueColor] set];
+  [NSBezierPath fillRect:prog];
+  
+  // Draw the bar outline
+  [[NSColor blackColor] set];
+  [NSBezierPath strokeRect:bar];
+  
   [icon unlockFocus];
   [NSApp setApplicationIconImage:icon];
 }
