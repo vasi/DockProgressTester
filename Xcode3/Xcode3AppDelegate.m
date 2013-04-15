@@ -66,15 +66,22 @@
   UInt8 phase = fmod(elapsed, phaseSeconds) / phaseSeconds *
 	UINT8_MAX;
   
-  NSImage *icon = [progressBackground copyWithZone:nil];
   progressDrawInfo.value = progressDrawInfo.max * progress;
   progressDrawInfo.trackInfo.progress.phase = phase;
   
+  NSImage *icon = [[NSImage alloc] initWithSize: [progressBackground size]];
+	NSRect bounds = NSZeroRect;
+	bounds.size = [progressBackground size];
   [icon lockFocus];
+	[progressBackground drawInRect:bounds
+												fromRect:NSZeroRect
+											 operation:NSCompositeSourceOver
+												fraction:1.0];
   CGContextRef ctx = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
   HIThemeDrawTrack(&progressDrawInfo, NULL, ctx, kHIThemeOrientationNormal);
   [icon unlockFocus];
   [NSApp setApplicationIconImage:icon];
+	[icon release];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
