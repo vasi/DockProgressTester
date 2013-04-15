@@ -9,17 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
 
-@interface Xcode3AppDelegate : NSObject <NSApplicationDelegate> {
-	NSWindow *window;
+@interface Xcode3AppDelegate : NSObject {
+	IBOutlet NSWindow *window;
 	
 	HIThemeTrackDrawInfo progressDrawInfo;
+	NSImage *progressBackground;
+	NSDate *startTime;
+	double updatesPerSecond;
 }
-
-@property (assign) IBOutlet NSWindow *window;
-
-@property (retain) NSImage *progressBackground;
-@property (retain) NSDate *startTime;
-
-@property double updatesPerSecond;
 
 @end

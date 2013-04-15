@@ -10,17 +10,12 @@
 
 @implementation Xcode3AppDelegate
 
-@synthesize window;
-@synthesize progressBackground;
-@synthesize startTime;
-@synthesize updatesPerSecond;
-
 - (void)initDockProgress
 {
   NSImage *appIcon = [NSImage imageNamed:@"NSApplicationIcon"];
-  self.progressBackground = [appIcon copyWithZone:nil];
+  progressBackground = [appIcon copyWithZone:nil];
   
-  NSSize sz = [self.progressBackground size];
+  NSSize sz = [progressBackground size];
   progressDrawInfo = (HIThemeTrackDrawInfo){
     .version = 0,
     .kind = kThemeLargeProgressBar,
@@ -44,18 +39,20 @@
   bounds.size.width -= mleft + mright;
   bounds.size.height -= mtop + mbot;
   
-  [self.progressBackground lockFocus];
+  [progressBackground lockFocus];
   [[NSColor whiteColor] set];
-  NSRectFill(NSRectFromCGRect(bounds));
-  [self.progressBackground unlockFocus];
+	NSRect fill = NSMakeRect(bounds.origin.x, bounds.origin.y,
+													 bounds.size.width, bounds.size.height);
+  NSRectFill(fill);
+  [progressBackground unlockFocus];
   
-  self.startTime = [NSDate date];
-  self.updatesPerSecond = 8.0;
+  startTime = [[NSDate alloc] init];
+  updatesPerSecond = 8.0;
 }
 
 - (void)drawDockProgress:(NSTimer*)timer
 {
-  [NSTimer scheduledTimerWithTimeInterval:1.0 / self.updatesPerSecond
+  [NSTimer scheduledTimerWithTimeInterval:1.0 / updatesPerSecond
                                    target:self
                                  selector:@selector(drawDockProgress:)
                                  userInfo:nil
@@ -64,12 +61,12 @@
   double seconds = 60.0;
   double phaseSeconds = 30.0;
   
-  double elapsed = -[self.startTime timeIntervalSinceNow];
+  double elapsed = -[startTime timeIntervalSinceNow];
   double progress = fmod(elapsed, seconds) / seconds;
   UInt8 phase = fmod(elapsed, phaseSeconds) / phaseSeconds *
 	UINT8_MAX;
   
-  NSImage *icon = [self.progressBackground copyWithZone:nil];
+  NSImage *icon = [progressBackground copyWithZone:nil];
   progressDrawInfo.value = progressDrawInfo.max * progress;
   progressDrawInfo.trackInfo.progress.phase = phase;
   
