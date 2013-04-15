@@ -45,7 +45,7 @@
   [self.progressBackground unlockFocus];
   
   self.startTime = [NSDate date];
-  self.updatesPerSecond = 30.0;
+  self.updatesPerSecond = 8.0;
 }
 
 - (void)drawDockProgress:(NSTimer*)timer
